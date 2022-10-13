@@ -1,0 +1,13 @@
+
+
+# 数据库配置
+db:
+  mysql:
+    host: '127.0.0.1'
+    username: 'sfdata'
+    password: 'sfdata123456'
+    database: 'spiderflow_data'
+    port: 3307
+    charset: 'utf8mb4'
+    timezone: '+08:00'
+    synchronize: true
