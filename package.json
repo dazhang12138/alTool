@@ -1,0 +1,11 @@
+{
+  "name": "al-tool",
+  "version": "1.0.0",
+  "dependencies": {
+  },
+  "scripts": {
+    "dev": "concurrently 'pnpm:dev:*'",
+    "dev:server": "pnpm run --dir code/service dev",
+    "dev:admin": "pnpm run --dir code/admin dev"
+  }
+}

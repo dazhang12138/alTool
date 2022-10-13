@@ -1,11 +1,12 @@
 {
-  "name": "al-service",
+  "name": "@al-tool/service",
   "version": "0.0.1",
   "description": "",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "dev": "pnpm run start:dev",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

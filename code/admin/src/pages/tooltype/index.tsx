@@ -11,7 +11,7 @@ const { Paragraph } = Typography;
 const CardList = () => {
   const { data, loading } = useRequest(() => {
     return queryFakeList({
-      count: 8,
+      search: '',
     });
   });
 
