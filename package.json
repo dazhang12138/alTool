@@ -4,8 +4,8 @@
   "dependencies": {
   },
   "scripts": {
-    "dev": "concurrently 'pnpm:dev:*'",
-    "dev:server": "pnpm run --dir code/service dev",
-    "dev:admin": "pnpm run --dir code/admin dev"
+    "start": "concurrently 'pnpm:start:*'",
+    "start:server": "pnpm run --dir code/service start:dev",
+    "start:admin": "pnpm run --dir code/admin start:dev"
   }
 }

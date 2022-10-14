@@ -6,7 +6,6 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "pnpm run start:dev",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -27,7 +26,6 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^9.0.1",
-    "@types/superagent": "^4.1.15",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "fs-extra": "^10.1.0",
