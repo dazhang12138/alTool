@@ -1,6 +1,6 @@
 import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
 import {ToolTypeDto} from "@dtos/tooltype.dto";
-import {IToolType} from "@models/tooltype";
+import {IToolType} from "@al-tool/domain";
 import {TooltypeEntity} from "@entitys/tooltype.entity";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";

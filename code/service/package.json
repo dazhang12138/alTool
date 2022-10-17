@@ -2,7 +2,7 @@
   "name": "@al-tool/service",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "zhangda_d",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -37,6 +37,7 @@
     "typeorm": "^0.3.10"
   },
   "devDependencies": {
+    "@al-tool/domain": "file:../domain",
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",

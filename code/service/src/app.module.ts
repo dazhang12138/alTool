@@ -4,12 +4,14 @@ import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TooltypeEntity } from "@entitys/tooltype.entity";
 import { getConfig } from "./config";
+import {LoginModule} from "@modules/login.module";
 
 const ENTITIES = [
   TooltypeEntity
 ]
 const MODULES = [
-  TooltypeModule
+  TooltypeModule,
+  LoginModule
 ]
 @Module({
   imports: [

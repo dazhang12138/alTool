@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { ToolTypeStatus } from "@models/tooltype";
+import { ToolTypeStatus } from "@al-tool/domain";
 
 @Entity('tooltype')
 export class TooltypeEntity {

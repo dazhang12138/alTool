@@ -1,4 +1,7 @@
-
+altool:
+  admin:
+    code: 'admin'
+    password: 'ant.design'
 
 # 数据库配置
 db:

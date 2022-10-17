@@ -1,0 +1,28 @@
+{
+  "name": "@al-tool/domain",
+  "version": "1.0.0",
+  "author": "zhangda_d",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  },
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.js"
+    }
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc src/index.ts --outDir lib --skipLibCheck --declaration --lib ES6"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "lib",
+    "src"
+  ]
+}

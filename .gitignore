@@ -3,3 +3,4 @@
 /node_modules
 
 .idea
+/code/domain/node_modules
