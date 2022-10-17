@@ -2,7 +2,7 @@
 exports.__esModule = true;
 exports.ToolTypeStatus = void 0;
 /**
- * 用户状态枚举
+ * 工具类别状态枚举
  */
 var ToolTypeStatus;
 (function (ToolTypeStatus) {

@@ -1,6 +1,6 @@
 import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
 import {ToolTypeDto} from "@dtos/tooltype.dto";
-import {IToolType} from "@al-tool/domain";
+import {IToolType, ToolTypeStatus} from "@al-tool/domain";
 import {TooltypeEntity} from "@entitys/tooltype.entity";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
@@ -79,8 +79,18 @@ export class TooltypeService{
    * 通过id查询工具类别
    * @param id 工具类别id
    */
-  async findById(id): Promise<IToolType> {
+  async findById(id: string): Promise<IToolType> {
     const type = await this.tooltypeRepo.findOneBy({id:id});
+    return instanceToPlain(type) as IToolType;
+  }
+
+  /**
+   * 通过id和启用状态查询工具类别
+   * @param id 工具类别id
+   * @param status 启用状态
+   */
+  async findByIdAndStatus(id: string,status: ToolTypeStatus): Promise<IToolType> {
+    const type = await this.tooltypeRepo.findOneBy({id:id,status:status});
     return instanceToPlain(type) as IToolType;
   }
 

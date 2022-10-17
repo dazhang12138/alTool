@@ -7,8 +7,7 @@ import { ToolTypeApiDefinition} from "@al-tool/domain";
 @Controller(ToolTypeApiDefinition.server)
 export class ToolTypeController {
 
-  constructor(private readonly tooltypeService: TooltypeService) {
-  }
+  constructor(private readonly tooltypeService: TooltypeService) {}
 
   @Post(ToolTypeApiDefinition.add.server)
   @HttpCode(HttpStatus.OK)

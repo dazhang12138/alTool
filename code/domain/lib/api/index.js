@@ -16,3 +16,4 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 exports.__esModule = true;
 __exportStar(require("./tooltype"), exports);
 __exportStar(require("./login"), exports);
+__exportStar(require("./tool"), exports);

@@ -5,13 +5,17 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TooltypeEntity } from "@entitys/tooltype.entity";
 import { getConfig } from "./config";
 import {LoginModule} from "@modules/login.module";
+import {ToolModule} from "@modules/tool.module";
+import {ToolEntity} from "@entitys/tool.entity";
 
 const ENTITIES = [
-  TooltypeEntity
+  TooltypeEntity,
+  ToolEntity
 ]
 const MODULES = [
   TooltypeModule,
-  LoginModule
+  LoginModule,
+  ToolModule
 ]
 @Module({
   imports: [

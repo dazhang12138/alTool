@@ -1,6 +1,6 @@
 
 /**
- * 用户状态枚举
+ * 工具类别状态枚举
  */
 export enum ToolTypeStatus {
   enable = 'enable',
