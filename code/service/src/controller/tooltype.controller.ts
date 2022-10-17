@@ -28,6 +28,18 @@ export class ToolTypeController {
     return await this.tooltypeService.updateToolType(tooltype);
   }
 
+  @Get(ToolTypeApiDefinition.enable.server)
+  @HttpCode(HttpStatus.OK)
+  async enable(@Query('id') id){
+    return await this.tooltypeService.statusUp(id,'disable');
+  }
+
+  @Get(ToolTypeApiDefinition.disable.server)
+  @HttpCode(HttpStatus.OK)
+  async disable(@Query('id') id){
+    return await this.tooltypeService.statusUp(id,'enable');
+  }
+
   @Get(ToolTypeApiDefinition.queryList.server)
   @HttpCode(HttpStatus.OK)
   async queryList(@Query('search') search){

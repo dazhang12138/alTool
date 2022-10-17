@@ -83,4 +83,22 @@ export class TooltypeService{
     const type = await this.tooltypeRepo.findOneBy({id:id});
     return instanceToPlain(type) as IToolType;
   }
+
+  /**
+   * 启用、停用类别
+   * @param id id
+   * @param status 更改后状态值
+   */
+  async statusUp(id,status) {
+    const type = await this.findById(id);
+    if (!type){
+      throw new HttpException('类别id查询不存在', HttpStatus.BAD_REQUEST);
+    }
+
+    type.status = status;
+    type.ts = new Date();
+
+    const ret = await this.tooltypeRepo.save(type);
+    return instanceToPlain(ret) as IToolType;
+  }
 }

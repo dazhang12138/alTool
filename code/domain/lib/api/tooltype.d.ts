@@ -19,6 +19,16 @@ export declare const ToolTypeApiDefinition: {
         server: "update";
         client: () => string;
     };
+    enable: {
+        method: "get";
+        server: "status/enable";
+        client: () => string;
+    };
+    disable: {
+        method: "get";
+        server: "status/disable";
+        client: () => string;
+    };
     /**
      * 列表查询
      */

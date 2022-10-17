@@ -22,6 +22,16 @@ exports.ToolTypeApiDefinition = {
         server: 'update',
         client: function () { return '/api/toolType/update'; }
     },
+    enable: {
+        method: 'get',
+        server: 'status/enable',
+        client: function () { return '/api/toolType/status/enable'; }
+    },
+    disable: {
+        method: 'get',
+        server: 'status/disable',
+        client: function () { return '/api/toolType/status/disable'; }
+    },
     /**
      * 列表查询
      */

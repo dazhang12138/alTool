@@ -21,6 +21,18 @@ export const ToolTypeApiDefinition = {
         client: () => '/api/toolType/update',
     },
 
+    enable:{
+        method: 'get' as const,
+        server: 'status/enable' as const,
+        client: () => '/api/toolType/status/enable',
+    },
+
+    disable:{
+        method: 'get' as const,
+        server: 'status/disable' as const,
+        client: () => '/api/toolType/status/disable',
+    },
+
     /**
      * 列表查询
      */

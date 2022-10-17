@@ -23,3 +23,29 @@ export async function addType(data: { [key: string]: any }, options?: { [key: st
     ...(options || {}),
   });
 }
+
+/** 修改规则 POST /api/toolType/update */
+export async function updateType(data: { [key: string]: any }, options?: { [key: string]: any }) {
+  return request<TableListItem>(ToolTypeApiDefinition.update.client(), {
+    data,
+    method: ToolTypeApiDefinition.update.method,
+    ...(options || {}),
+  });
+}
+
+/** 启用、停用规则 GET /api/toolType/status/enable /api/toolType/status/disable */
+export async function statusUpType(status:string, params: { id: string }) {
+  switch (status) {
+    case 'enable':
+      console.log('启用->停用:',status,params)
+      return request(ToolTypeApiDefinition.enable.client(), {
+        method: ToolTypeApiDefinition.enable.method,
+        params,
+      });
+    case 'disable':
+      return request(ToolTypeApiDefinition.disable.client(), {
+        method: ToolTypeApiDefinition.disable.method,
+        params,
+      });
+  }
+}
