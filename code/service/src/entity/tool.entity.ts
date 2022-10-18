@@ -25,10 +25,10 @@ export class ToolEntity {
     @Column({ type: 'varchar', length: 2000, comment: '描述|备注' })
     public memo: string;
 
-    @Column({ type: 'number', length: 5, comment: '序列' })
+    @Column({ type: 'int', comment: '序列' })
     public orderNum: number;
 
-    @Column({ type: 'boolean', length: 1, comment: '是否常用' })
+    @Column({ type: 'boolean', comment: '是否常用' })
     public frequently: boolean;
 
     @Column({ type: 'varchar', length: 36, comment: '类别' })

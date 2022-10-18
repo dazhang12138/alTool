@@ -32,9 +32,15 @@
   },
   {
     path: '/tooltype',
-    name: '工具类型',
+    name: 'tooltype',
     icon: 'dashboard',
     component: './tooltype',
+  },
+  {
+    path: '/tool',
+    name: 'tool',
+    icon: 'dashboard',
+    component: './tool',
   },
   {
     path: '/dashboard',

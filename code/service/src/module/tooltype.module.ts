@@ -12,5 +12,6 @@ import {TooltypeService} from "@services/tooltype.service";
   ],
   controllers: [ToolTypeController],
   providers: [TooltypeService],
+  exports:[TooltypeService]
 })
 export class TooltypeModule {}

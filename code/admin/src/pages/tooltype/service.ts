@@ -37,7 +37,6 @@ export async function updateType(data: { [key: string]: any }, options?: { [key:
 export async function statusUpType(status:string, params: { id: string }) {
   switch (status) {
     case 'enable':
-      console.log('启用->停用:',status,params)
       return request(ToolTypeApiDefinition.enable.client(), {
         method: ToolTypeApiDefinition.enable.method,
         params,
