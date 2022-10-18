@@ -1,8 +1,8 @@
 import {Body, Controller, Get, HttpCode, HttpException, HttpStatus, Post, Query, Request} from "@nestjs/common";
-import { ToolTypeDto } from "@dtos/tooltype.dto";
-import { TooltypeService } from "@services/tooltype.service";
+import {ToolTypeDto} from "@dtos/tooltype.dto";
+import {TooltypeService} from "@services/tooltype.service";
 import {UpdateToolTypeDto} from "@dtos/update-tooltype.dto";
-import { ToolTypeApiDefinition} from "@al-tool/domain";
+import {ToolTypeApiDefinition} from "@al-tool/domain";
 
 @Controller(ToolTypeApiDefinition.server)
 export class ToolTypeController {
@@ -57,4 +57,14 @@ export class ToolTypeController {
     return await this.tooltypeService.findById(id);
   }
 
+
+  @Get(ToolTypeApiDefinition.queryRefer.server)
+  @HttpCode(HttpStatus.OK)
+  async queryRefer(){
+    let data = await this.tooltypeService.findAllToolTypeEnable();
+    return {
+      status:'ok',
+      data: data
+    };
+  }
 }

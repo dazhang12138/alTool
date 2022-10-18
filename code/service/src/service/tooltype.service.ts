@@ -111,4 +111,14 @@ export class TooltypeService{
     const ret = await this.tooltypeRepo.save(type);
     return instanceToPlain(ret) as IToolType;
   }
+
+  /**
+   * 查询全部启动类别数据
+   */
+  async findAllToolTypeEnable() {
+    return this.tooltypeRepo.createQueryBuilder('tooltype')
+        .andWhere('tooltype.status = :status')
+        .setParameter('status', 'enable')
+        .getMany();
+  }
 }

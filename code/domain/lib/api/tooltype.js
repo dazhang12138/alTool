@@ -22,11 +22,17 @@ exports.ToolTypeApiDefinition = {
         server: 'update',
         client: function () { return '/api/toolType/update'; }
     },
+    /**
+     * 启用
+     */
     enable: {
         method: 'get',
         server: 'status/enable',
         client: function () { return '/api/toolType/status/enable'; }
     },
+    /**
+     * 停用
+     */
     disable: {
         method: 'get',
         server: 'status/disable',
@@ -47,5 +53,13 @@ exports.ToolTypeApiDefinition = {
         method: 'get',
         server: 'query/one',
         client: function () { return '/api/toolType/query/one'; }
+    },
+    /**
+     * 参照查询
+     */
+    queryRefer: {
+        method: 'get',
+        server: 'query/refer',
+        client: function () { return '/api/toolType/query/refer'; }
     }
 };

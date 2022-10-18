@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import {ToolApiDefinition,ITool} from '@al-tool/domain';
+import {ToolApiDefinition, ITool, ToolTypeApiDefinition, IToolType} from '@al-tool/domain';
 import {TableListItem} from "@/pages/list/table-list/data";
 
 /**
@@ -12,6 +12,16 @@ export async function queryToolList(params: {
   return request(ToolApiDefinition.queryList.client(), {
     method:ToolApiDefinition.queryList.method,
     params,
+  });
+}
+
+/**
+ * 类别参照查询 GET /api/tooltype/query/refer
+ * @param params 模糊搜索
+ */
+export async function queryToolTypeRefer(): Promise<{data: IToolType[]}> {
+  return request(ToolTypeApiDefinition.queryRefer.client(), {
+    method:ToolTypeApiDefinition.queryRefer.method,
   });
 }
 

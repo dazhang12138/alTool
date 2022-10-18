@@ -20,13 +20,17 @@ export const ToolTypeApiDefinition = {
         server: 'update' as const,
         client: () => '/api/toolType/update',
     },
-
+    /**
+     * 启用
+     */
     enable:{
         method: 'get' as const,
         server: 'status/enable' as const,
         client: () => '/api/toolType/status/enable',
     },
-
+    /**
+     * 停用
+     */
     disable:{
         method: 'get' as const,
         server: 'status/disable' as const,
@@ -48,6 +52,15 @@ export const ToolTypeApiDefinition = {
         method: 'get' as const,
         server: 'query/one' as const,
         client: () => '/api/toolType/query/one',
+    },
+
+    /**
+     * 参照查询
+     */
+    queryRefer:{
+        method: 'get' as const,
+        server: 'query/refer' as const,
+        client: () => '/api/toolType/query/refer',
     }
 
 }

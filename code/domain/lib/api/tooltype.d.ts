@@ -19,11 +19,17 @@ export declare const ToolTypeApiDefinition: {
         server: "update";
         client: () => string;
     };
+    /**
+     * 启用
+     */
     enable: {
         method: "get";
         server: "status/enable";
         client: () => string;
     };
+    /**
+     * 停用
+     */
     disable: {
         method: "get";
         server: "status/disable";
@@ -43,6 +49,14 @@ export declare const ToolTypeApiDefinition: {
     queryOneById: {
         method: "get";
         server: "query/one";
+        client: () => string;
+    };
+    /**
+     * 参照查询
+     */
+    queryRefer: {
+        method: "get";
+        server: "query/refer";
         client: () => string;
     };
 };
