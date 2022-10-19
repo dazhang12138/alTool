@@ -4,7 +4,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { useRequest } from 'umi';
 import { queryToolList,addType,updateType,statusUpType } from './service';
 import styles from './style.less';
-import {ITool,ToolStatus} from "@al-tool/domain";
+import {FileApiDefinition, ITool, ToolStatus} from "@al-tool/domain";
 import {useState} from "react";
 import ToolAddOrUpModel from "@/pages/tool/components/toolAddOrUpModel";
 import {TableListItem} from "@/pages/list/table-list/data";
@@ -78,7 +78,7 @@ const handleStatusUp = async (id: string,status: string) => {
 const CardList = () => {
   /** 新建窗口的弹窗 */
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
-  /** 新增还是修改 */
+  /** 是否浏览数据 */
   const [done, setDone] = useState<boolean>(false);
   /** 修改卡片数据 */
   const [current, setCurrent] = useState<Partial<ITool> | undefined>(undefined);
@@ -110,11 +110,6 @@ const CardList = () => {
     </div>
   );
   const nullData: Partial<ITool> = {};
-
-  const showEditModal = (item: Partial<ITool>) => {
-    handleModalVisible(true);
-    setCurrent(item);
-  };
 
   return (
     <PageContainer content={content} extraContent={extraContent}>
@@ -154,15 +149,25 @@ const CardList = () => {
                   <Card
                     hoverable
                     className={styles.card}
-                    actions={[<a key="option1" onClick={(e) => {
+                    actions={[<a key="option0" onClick={(e) => {
                       e.preventDefault();
-                      showEditModal(item)
+                      setDone(true);
+                      setCurrent(item);
+                      handleModalVisible(true);
+                    }}>浏览</a>,<a key="option1" onClick={(e) => {
+                      e.preventDefault();
+                      setDone(false);
+                      setCurrent(item);
+                      handleModalVisible(true);
                     }}>修改</a>, <a key="option2" onClick={async () => {
                       const success = item && item.id && item.status && await handleStatusUp(item.id,item.status);
                       if (success){
                         run(searchdata);
                       }
-                    }}>{item.status === ToolStatus.enable ? '停用' : '启用'}</a>, <a key="option2">删除</a>]}
+                    }}>{item.status === ToolStatus.enable ? '停用' : '启用'}</a>, <a key="option3">删除</a>]}
+                    cover={
+                      <img alt={item.code} src={FileApiDefinition.downloadICO.client()+'?id='+item.img}/>
+                    }
                   >
                     <Card.Meta
                       title={<a>{item.title}</a>}
@@ -186,6 +191,8 @@ const CardList = () => {
                   type="dashed"
                   className={styles.newButton}
                   onClick={() => {
+                    setDone(false);
+                    setCurrent(undefined);
                     handleModalVisible(true);
                   }}>
                   <PlusOutlined /> 新增工具标签
@@ -197,29 +204,16 @@ const CardList = () => {
       </div>
       <ToolAddOrUpModel
         done={done}
+        current={current}
         visible={createModalVisible}
-        onDone={()=>{
-          setDone(false);
-          handleModalVisible(false);
-          setCurrent({});
-        }}
+        onDone={()=>{handleModalVisible(false)}}
         onSubmit={ async (values)=>{
-          setDone(true);
-          const success = await handleAdd(values as TableListItem);
+          const success = values && values.id ? await handleUpdate(values as TableListItem) : await handleAdd(values as TableListItem);
           if (success) {
             handleModalVisible(false);
             run(searchdata);
           }
-        }}
-        onUpdate={async (values) => {
-          setDone(true);
-          const success = await handleUpdate(values as TableListItem);
-          if (success) {
-            handleModalVisible(false);
-            run(searchdata);
-          }
-        }}
-        current={current}/>
+        }}/>
     </PageContainer>
   );
 };

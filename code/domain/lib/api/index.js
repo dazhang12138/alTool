@@ -17,3 +17,4 @@ exports.__esModule = true;
 __exportStar(require("./tooltype"), exports);
 __exportStar(require("./login"), exports);
 __exportStar(require("./tool"), exports);
+__exportStar(require("./file"), exports);

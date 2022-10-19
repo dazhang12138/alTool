@@ -2,7 +2,7 @@ import {forwardRef, HttpException, HttpStatus, Inject, Injectable} from "@nestjs
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {ToolEntity} from "@entitys/tool.entity";
-import {ITool, ToolTypeStatus} from "@al-tool/domain";
+import {ITool, ToolStatus, ToolTypeStatus} from "@al-tool/domain";
 import {instanceToPlain} from "class-transformer";
 import {ToolDto} from "@dtos/tool.dto";
 import {UpdateToolDto} from "@dtos/update-tool.dto";
@@ -36,7 +36,8 @@ export class ToolService {
         if (!type){
             throw new HttpException('该工具类别未查询到数据或已停用', HttpStatus.BAD_REQUEST);
         }
-
+        const maxOrderNum: number = await this.toolRepo.count({where:{status: ToolStatus.enable}});
+        tool.orderNum = maxOrderNum + 1;
         //保存类别
         const res = await this.toolRepo.create(tool);
         const created = await this.toolRepo.save(res);

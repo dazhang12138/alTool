@@ -19,7 +19,7 @@ export class ToolEntity {
     @Column({ type: 'varchar', length: 500, comment: '标题' })
     public title: string;
 
-    @Column({ type: 'varchar', length: 2000, comment: 'ICO' })
+    @Column({ type: 'varchar', length: 36, comment: 'ICO' })
     public img: string;
 
     @Column({ type: 'varchar', length: 2000, comment: '描述|备注' })
@@ -28,7 +28,7 @@ export class ToolEntity {
     @Column({ type: 'int', comment: '序列' })
     public orderNum: number;
 
-    @Column({ type: 'boolean', comment: '是否常用' })
+    @Column({ type: 'boolean',default: false, comment: '是否常用' })
     public frequently: boolean;
 
     @Column({ type: 'varchar', length: 36, comment: '类别' })

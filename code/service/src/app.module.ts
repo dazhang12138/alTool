@@ -7,15 +7,19 @@ import { getConfig } from "./config";
 import {LoginModule} from "@modules/login.module";
 import {ToolModule} from "@modules/tool.module";
 import {ToolEntity} from "@entitys/tool.entity";
+import {IcoEntity} from "@entitys/ico.entity";
+import {FileModule} from "@modules/file.module";
 
 const ENTITIES = [
   TooltypeEntity,
-  ToolEntity
+  ToolEntity,
+  IcoEntity
 ]
 const MODULES = [
   TooltypeModule,
   LoginModule,
-  ToolModule
+  ToolModule,
+  FileModule
 ]
 @Module({
   imports: [
