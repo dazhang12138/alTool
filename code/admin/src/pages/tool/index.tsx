@@ -1,10 +1,10 @@
-import {PlusOutlined} from '@ant-design/icons';
-import {Button, Card, List, message, Input, Tag} from 'antd';
+import {EditOutlined, PlusOutlined} from '@ant-design/icons';
+import {Button, Card, List, message, Input, Tag, Dropdown, Menu, MenuProps} from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
 import { useRequest } from 'umi';
 import { queryToolList,addType,updateType,statusUpType } from './service';
 import styles from './style.less';
-import {FileApiDefinition, ITool, ToolStatus} from "@al-tool/domain";
+import {ITool, ToolStatus} from "@al-tool/domain";
 import {useState} from "react";
 import ToolAddOrUpModel from "@/pages/tool/components/toolAddOrUpModel";
 import {TableListItem} from "@/pages/list/table-list/data";
@@ -72,6 +72,31 @@ const handleStatusUp = async (id: string,status: string) => {
     return false;
   }
 }
+
+const onMenuClick: MenuProps['onClick'] = e => {
+  console.log('click', e);
+};
+
+const menu=(
+  <Menu
+    onClick={onMenuClick}
+    items={[
+      {
+        key:'top',
+        label:'TOP'
+      },{
+        key:'up',
+        label:'UP'
+      },{
+        key:'down',
+        label:'DOWN'
+      },{
+        key:'bottom',
+        label:'BOTTOM'
+      }
+    ]}
+  />
+)
 
 
 const CardList = () => {
@@ -148,29 +173,29 @@ const CardList = () => {
                   <Card
                     hoverable
                     className={styles.card}
-                    actions={[<a key="option0" onClick={(e) => {
-                      e.preventDefault();
-                      setDone(true);
-                      setCurrent(item);
-                      handleModalVisible(true);
-                    }}>浏览</a>,<a key="option1" onClick={(e) => {
+                    actions={[<a key="option1" onClick={(e) => {
                       e.preventDefault();
                       setDone(false);
                       setCurrent(item);
                       handleModalVisible(true);
-                    }}>修改</a>, <a key="option2" onClick={async () => {
+                    }}><EditOutlined/></a>, <a key="option2" onClick={async () => {
                       const success = item && item.id && item.status && await handleStatusUp(item.id,item.status);
                       if (success){
                         run(searchdata);
                       }
-                    }}>{item.status === ToolStatus.enable ? '停用' : '启用'}</a>, <a key="option3">删除</a>]}
+                    }}>{item.status === ToolStatus.enable ? '停用' : '启用'}</a>,<Dropdown.Button type='text' overlay={menu}>序列操作</Dropdown.Button>]}
                     cover={
-                      <img alt={item.code} src={FileApiDefinition.downloadICO.client()+'?id='+item.img}/>
+                      <img alt={item.code} src={item.img}/>
                     }
                   >
                     <Card.Meta
                       avatar={<Tag color={item.status === ToolStatus.enable ? "green" : "red"}>{item.status === ToolStatus.enable ? '启用' : '停用'}</Tag>}
-                      title={item.title}
+                      title={<a onClick={(e) => {
+                        e.preventDefault();
+                        setDone(true);
+                        setCurrent(item);
+                        handleModalVisible(true);
+                      }}>{item.title}</a>}
                       description={item.memo}
                     />
                   </Card>

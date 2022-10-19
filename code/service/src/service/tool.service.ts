@@ -1,6 +1,6 @@
 import {forwardRef, HttpException, HttpStatus, Inject, Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Repository} from "typeorm";
+import {Not, Repository} from "typeorm";
 import {ToolEntity} from "@entitys/tool.entity";
 import {ITool, ToolStatus, ToolTypeStatus} from "@al-tool/domain";
 import {instanceToPlain} from "class-transformer";
@@ -55,7 +55,7 @@ export class ToolService {
             throw new HttpException('工具标签id查询不存在', HttpStatus.BAD_REQUEST);
         }
         //校验唯一性
-        if (await this.toolRepo.findOne({where:{ name : tool.name }})) {
+        if (await this.toolRepo.findOne({where:{ name : tool.name,id: Not(tool.id) }})) {
             throw new HttpException('该工具标签已存在', HttpStatus.BAD_REQUEST);
         }
 
@@ -78,9 +78,10 @@ export class ToolService {
                 .orWhere('tool.name LIKE :search')
                 .orWhere('tool.code LIKE :search')
                 .setParameter('search', search)
+                .orderBy('orderNum','ASC')
                 .getMany();
         }else{
-            const query = this.toolRepo.createQueryBuilder('tool')
+            const query = this.toolRepo.createQueryBuilder('tool').orderBy('orderNum','ASC');
             const [data] = await query.getManyAndCount();
             return data;
         }

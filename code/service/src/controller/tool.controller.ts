@@ -1,5 +1,5 @@
 import {Body, Controller, Get, HttpCode, HttpException, HttpStatus, Post, Query, Request} from "@nestjs/common";
-import {ToolApiDefinition} from "@al-tool/domain";
+import {FileApiDefinition, ToolApiDefinition} from "@al-tool/domain";
 import {ToolDto} from "@dtos/tool.dto";
 import {UpdateToolDto} from "@dtos/update-tool.dto";
 import {ToolService} from "@services/tool.service";
@@ -43,6 +43,9 @@ export class ToolController{
     @HttpCode(HttpStatus.OK)
     async queryList(@Query('search') search){
         let data = await this.toolService.findAllToolType(search && '%'+search+'%');
+        data.map(item => {
+            item.img = FileApiDefinition.downloadICO.client()+'?id='+item.img;
+        })
         return {
             status:'ok',
             data:{

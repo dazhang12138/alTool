@@ -1,16 +1,15 @@
-import {FC} from "react";
+import {FC, useRef} from "react";
 import {
   ModalForm,
   ProFormSelect,
   ProFormSwitch,
   ProFormText,
-  ProFormUploadButton,
-  ProFormDigit, ProFormGroup, ProFormDateTimePicker
+  ProFormDigit, ProFormGroup, ProFormDateTimePicker, ProFormInstance
 } from "@ant-design/pro-form";
-import {FileApiDefinition, ITool} from "@al-tool/domain";
+import {ITool} from "@al-tool/domain";
 import {queryToolTypeRefer} from "@/pages/tool/service";
-import {message} from "antd";
-import type { RcFile } from 'antd/es/upload/interface';
+import ToolUpload from "@/pages/tool/components/toolUpload";
+import {Tag} from "antd";
 
 
 type ToolAddOrUpModelProps = {
@@ -26,28 +25,15 @@ type ToolAddOrUpModelProps = {
   current: Partial<ITool> | undefined;
 
 }
-const beforeUpload = (file: RcFile) => {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-  if (!isJpgOrPng) {
-    message.error('请上传 JPG/PNG 类型文件!');
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error('图片大小最大为 2MB!');
-  }
-  return isJpgOrPng && isLt2M;
-};
 
 const ToolAddOrUpModel:FC<ToolAddOrUpModelProps> = (props) => {
 
   const {done,current,visible,onDone,onSubmit} = props;
 
+  const formRef = useRef<ProFormInstance>();
+
   if (!visible) {
     return null;
-  }
-  if (current){
-    current.img = undefined;
-    // current.toolType = undefined;
   }
 
   return(
@@ -56,6 +42,7 @@ const ToolAddOrUpModel:FC<ToolAddOrUpModelProps> = (props) => {
       width="50%"
       visible={visible}
       readonly={done}
+      formRef={formRef}
       grid={true}
       layout='horizontal'
       submitter={{submitButtonProps:{style:{display:`${done ? 'none' : ''}`}}}}
@@ -66,8 +53,6 @@ const ToolAddOrUpModel:FC<ToolAddOrUpModelProps> = (props) => {
       initialValues={current}
       onFinish={async (values) => {
         console.log(values)
-        values.img = values && values.img && values.img[0] && values.img[0].response;
-        values.toolType = values && values.toolType && values.toolType.key;
         onSubmit(values);
       }}
     >
@@ -122,6 +107,9 @@ const ToolAddOrUpModel:FC<ToolAddOrUpModelProps> = (props) => {
               })
             })
           }}
+          getValueFromEvent={e => {
+            return e && e.key;
+          }}
           fieldProps={{
             labelInValue: true
           }}
@@ -162,31 +150,23 @@ const ToolAddOrUpModel:FC<ToolAddOrUpModelProps> = (props) => {
           colProps={{ span: 24 }}
           name="memo"
         />
-        <ProFormUploadButton
-          rules={[
-            {
-              required: true,
-              message: 'ICO为必填项',
-            },
-          ]}
-          max={1}
-          action={FileApiDefinition.uploadICO.client()}
-          fieldProps={{
-            listType: "picture-card",
-            beforeUpload,
-          }}
-          label="ICO"
-          colProps={{ md: 12, xl: 24 }}
-          name="img"
+        <ToolUpload
+          url={current && current.img}
+          disabled={done}
+          formRef={formRef}
         />
       </ProFormGroup>
       <ProFormGroup
         title='辅助字段'
       >
-        <ProFormSwitch
+        <ProFormSelect
           label="启用状态"
           colProps={{ md: 12, xl: 6 }}
           name="status"
+          valueEnum={{
+            enable: <Tag color='green'>启用</Tag>,
+            disable: <Tag color='red'>停用</Tag>
+          }}
           disabled={true}
         />
         <ProFormSwitch
