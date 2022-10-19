@@ -4,7 +4,7 @@ import {
     HttpCode,
     HttpStatus,
     Post,
-    Query,
+    Query, Res,
     StreamableFile,
     UploadedFile,
     UseInterceptors
@@ -12,6 +12,7 @@ import {
 import {FILE_CHUNK_SIZE, FileApiDefinition} from "@al-tool/domain";
 import {FileInterceptor} from "@nestjs/platform-express";
 import {FileService} from "@services/file.service";
+import { Express } from 'express'
 
 
 @Controller(FileApiDefinition.server)
@@ -29,13 +30,18 @@ export class FileController{
             },
         })
     )
-    async uploadICO(@UploadedFile() file){
+    async uploadICO(@UploadedFile() file: Express.Multer.File){
         return await this.fileService.saveICO(file);
     }
 
     @Get(FileApiDefinition.downloadICO.server)
     @HttpCode(HttpStatus.OK)
-    async downloadICO(@Query('id') id): Promise<StreamableFile>{
-        return await this.fileService.findICO(id);
+    async downloadICO(@Res({ passthrough: true }) res,@Query('id') id){
+        let data = await this.fileService.findICO(id);
+        res.set({
+            'Content-Type': data.mimetype,
+            'Content-Disposition': `attachment; filename="${encodeURIComponent(data.originalname)}"`,
+        });
+        return new StreamableFile(data.base64);
     }
 }

@@ -1,5 +1,5 @@
-import { PlusOutlined } from '@ant-design/icons';
-import {Button, Card, List, message, Tag, Typography, Input} from 'antd';
+import {PlusOutlined} from '@ant-design/icons';
+import {Button, Card, List, message, Input, Tag} from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
 import { useRequest } from 'umi';
 import { queryToolList,addType,updateType,statusUpType } from './service';
@@ -9,7 +9,6 @@ import {useState} from "react";
 import ToolAddOrUpModel from "@/pages/tool/components/toolAddOrUpModel";
 import {TableListItem} from "@/pages/list/table-list/data";
 
-const { Paragraph } = Typography;
 const { Search } = Input;
 
 /**
@@ -170,16 +169,9 @@ const CardList = () => {
                     }
                   >
                     <Card.Meta
-                      title={<a>{item.title}</a>}
-                      description={
-                        <Paragraph className={styles.item} ellipsis={{ rows: 3 }}>
-                          {item.name} | {item.name}
-                          <br/>
-                          {item.memo}
-                          <br/>
-                          <Tag color={item.status === ToolStatus.enable ? 'green' : 'red'}>{item.status === ToolStatus.enable ? '启用' : '停用'}</Tag>
-                        </Paragraph>
-                      }
+                      avatar={<Tag color={item.status === ToolStatus.enable ? "green" : "red"}>{item.status === ToolStatus.enable ? '启用' : '停用'}</Tag>}
+                      title={item.title}
+                      description={item.memo}
                     />
                   </Card>
                 </List.Item>
