@@ -1,12 +1,18 @@
 import React from 'react';
-import './App.css';
 import ToolType from "./page/toolType";
+import {Layout} from "@douyinfe/semi-ui";
+
+const { Header, Footer, Content } = Layout;
 
 function App() {
   return (
-    <div className="App">
-      <ToolType/>
-    </div>
+      <Layout className="components-layout-demo">
+          <Header>
+              <ToolType/>
+          </Header>
+          <Content>Content</Content>
+          <Footer>Footer</Footer>
+      </Layout>
   );
 }
 
