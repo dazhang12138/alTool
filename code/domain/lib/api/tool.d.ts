@@ -45,4 +45,9 @@ export declare const ToolApiDefinition: {
         server: "query/one";
         client: () => string;
     };
+    queryType: {
+        method: "get";
+        server: "query/type";
+        client: () => string;
+    };
 };

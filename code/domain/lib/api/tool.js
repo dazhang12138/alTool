@@ -47,5 +47,11 @@ exports.ToolApiDefinition = {
         method: 'get',
         server: 'query/one',
         client: function () { return '/api/tool/query/one'; }
+    },
+    //按照分类过滤查询
+    queryType: {
+        method: 'get',
+        server: 'query/type',
+        client: function () { return '/api/tool/query/type'; }
     }
 };

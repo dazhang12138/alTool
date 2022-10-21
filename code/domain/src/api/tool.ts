@@ -48,6 +48,13 @@ export const ToolApiDefinition = {
         method: 'get' as const,
         server: 'query/one' as const,
         client: () => '/api/tool/query/one',
+    },
+
+    //按照分类过滤查询
+    queryType:{
+        method: 'get' as const,
+        server: 'query/type' as const,
+        client: () => '/api/tool/query/type'
     }
 
 }

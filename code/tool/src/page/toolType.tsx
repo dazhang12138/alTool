@@ -2,10 +2,14 @@ import {FC, useEffect, useState} from "react";
 import {TabPane, Tabs} from "@douyinfe/semi-ui";
 import {IToolType, ToolTypeApiDefinition} from '@al-tool/domain'
 import {get} from '../service'
-import Tool from "./tool";
 
-const ToolType:FC = (props) => {
+type ToolTypeProps = {
+    onChange: (activeKey: string) => void;
+}
 
+const ToolType:FC<ToolTypeProps> = (props) => {
+
+    const {onChange} = props;
     const [data,setData] = useState([] as IToolType[]);
 
     useEffect(()=>{
@@ -16,14 +20,14 @@ const ToolType:FC = (props) => {
 
 
     return(
-        <Tabs type="button" defaultActiveKey='allToolType'>
-            <TabPane tab='all' itemKey='allToolType'>
-                <Tool typeid={undefined}/>
-            </TabPane>
+        <Tabs
+            type="button"
+            defaultActiveKey='allToolType'
+            onChange={onChange}
+        >
+            <TabPane tab='全部' itemKey='allToolType' />
             {data && data.map(item => {
-                return <TabPane tab={item.name} itemKey={item.id}>
-                    <Tool typeid={item.id}/>
-                </TabPane>
+                return <TabPane tab={item.name} itemKey={item.id} />
             })}
         </Tabs>
     );

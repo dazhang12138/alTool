@@ -114,4 +114,21 @@ export class ToolService {
         const ret = await this.toolRepo.save(tool);
         return instanceToPlain(ret) as ITool;
     }
+
+    /**
+     * 按照类型id过滤数据
+     * @param id
+     */
+    async findByType(id) {
+        const query = this.toolRepo.createQueryBuilder('tool');
+        if (id){
+            query.andWhere('tool.toolType = :toolType')
+              .setParameter('toolType',id);
+        }
+
+       return await query.andWhere('tool.status = :status')
+         .setParameter('status',ToolStatus.enable)
+         .orderBy('orderNum')
+         .getMany();
+    }
 }

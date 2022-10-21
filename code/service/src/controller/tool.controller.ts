@@ -59,4 +59,10 @@ export class ToolController{
     async queryOneById(@Request() req, @Query('id') id){
         return await this.toolService.findById(id);
     }
+
+    @Get(ToolApiDefinition.queryType.server)
+    @HttpCode(HttpStatus.OK)
+    async queryType(@Query('id') id){
+        return await this.toolService.findByType(id);
+    }
 }
