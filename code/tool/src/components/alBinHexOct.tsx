@@ -4,16 +4,19 @@ import {
     Button,
     Divider,
     Input,
-    InputNumber,
     Radio,
     RadioGroup,
-    Slider,
     Space,
-    Table
+    Table,
+    Toast,
+    Typography
 } from "@douyinfe/semi-ui";
-import { Typography } from '@douyinfe/semi-ui';
-import { IconHome, IconPriceTag, IconLink } from '@douyinfe/semi-icons';
+import {IconHome, IconLink, IconPriceTag} from '@douyinfe/semi-icons';
+import {BinHexOct} from "../arithmetic/binHexOct";
+
 const { Title, Text, Paragraph } = Typography;
+
+const binhexoct = new BinHexOct();
 
 const columns = [
     {
@@ -32,7 +35,7 @@ const columns = [
         width:'40%'
     },
 ]
-const markValue = [2,8,10,16,32,36,58,62];
+const markValue = [2,8,10,16,26,32,36,52,58,62];
 
 const AlBinHexOct = () => {
 
@@ -74,7 +77,7 @@ const AlBinHexOct = () => {
             key:'16',
             value:'16进制',
             result:result[16],
-            memo:'0-9,a-f'
+            memo:'0-9,A-F'
         },
         {
             key:'26',
@@ -134,19 +137,7 @@ const AlBinHexOct = () => {
                     return <Radio value={item}>{item}进制</Radio>
                 })}
             </RadioGroup>
-            <Divider layout="vertical" margin='12px'/>
-            <Text strong>更多: </Text>
-            <InputNumber hideButtons disabled style={{ width: 40 }} defaultValue={2} min={2} max={62} value={value} />
-            <Slider
-                step={1} min={2} max={62} value={value}
-                onChange={(value) => {
-                    if (typeof value === 'number'){
-                        setValue(value);
-                    }
-                }}
-                marks={{2:'2',8:'8',10:'10',16:'16',32:'32',36:'36',58:'58',62:'62'}}
-            ></Slider>
-            <br/>
+            <Divider margin='12px'/>
             <Space style={{width: '100%'}}>
                 <Input
                     style={{ width: '75%' }} defaultValue={numericalValue}
@@ -158,6 +149,11 @@ const AlBinHexOct = () => {
                     theme='solid' type='primary' style={{ marginRight: 8 }}
                     onClick={()=>{
                         console.log(numericalValue,value);
+                        try {
+                            binhexoct.binhexOct(numericalValue,value);
+                        }catch (error: any) {
+                            Toast.error(error.message);
+                        }
                     }}
                 >
                     转换
