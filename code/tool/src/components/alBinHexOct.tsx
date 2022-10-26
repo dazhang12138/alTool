@@ -3,20 +3,30 @@ import {
     Breadcrumb,
     Button,
     Divider,
-    Input,
+    Input, InputNumber,
     Radio,
-    RadioGroup,
+    RadioGroup, Slider,
     Space,
     Table,
     Toast,
     Typography
 } from "@douyinfe/semi-ui";
 import {IconHome, IconLink, IconPriceTag} from '@douyinfe/semi-icons';
-import {BinHexOct} from "../arithmetic/binHexOct";
+import {binhexOct} from "../arithmetic/binHexOct";
 
 const { Title, Text, Paragraph } = Typography;
 
-const binhexoct = new BinHexOct();
+const text2 = (text: string)=>{
+    while (text.length % 4 > 0){
+        text = "0" + text;
+    }
+    text = text.replace(/\s/g,'')
+                .replace(/(.{4})/g,'$1 ')
+                .replace(/(^\s*)|(\s*$)/g,'');
+    return(
+        <Paragraph copyable={{content:text,copyTip:'格式化复制'}}></Paragraph>
+    )
+}
 
 const columns = [
     {
@@ -27,7 +37,15 @@ const columns = [
     {
         title: '结果',
         dataIndex: 'result',
-        width:'50%'
+        width:'50%',
+        render: (text: any,record: any) => {
+            return (
+                <div>
+                    <Space><Paragraph copyable>{text}</Paragraph>
+                        {record.key === '2' && text2(text)}</Space>
+                </div>
+            );
+        }
     },
     {
         title: '解释',
@@ -35,7 +53,7 @@ const columns = [
         width:'40%'
     },
 ]
-const markValue = [2,8,10,16,26,32,36,52,58,62];
+const markValue = [2,8,10,16,32,36,58,62];
 
 const AlBinHexOct = () => {
 
@@ -52,7 +70,7 @@ const AlBinHexOct = () => {
         52:'j',
         58:'a',
         62:'9',
-    });
+    }as Partial<{ [key:number]:any }>);
 
     const data = [
         {
@@ -137,6 +155,19 @@ const AlBinHexOct = () => {
                     return <Radio value={item}>{item}进制</Radio>
                 })}
             </RadioGroup>
+            <Divider layout="vertical" margin='12px'/>
+            <Text strong>更多: </Text>
+            <InputNumber hideButtons disabled style={{ width: 40 }} defaultValue={2} min={2} max={62} value={value} />
+            <Slider
+                step={1} min={2} max={62} value={value}
+                onChange={(value) => {
+                    if (typeof value === 'number'){
+                        setValue(value);
+                    }
+                }}
+                marks={{2:'2',8:'8',10:'10',16:'16',32:'32',36:'36',58:'58',62:'62'}}
+            ></Slider>
+            <br/>
             <Divider margin='12px'/>
             <Space style={{width: '100%'}}>
                 <Input
@@ -150,7 +181,8 @@ const AlBinHexOct = () => {
                     onClick={()=>{
                         console.log(numericalValue,value);
                         try {
-                            binhexoct.binhexOct(numericalValue,value);
+                            const newResult = binhexOct(numericalValue,value);
+                            setResult(newResult);
                         }catch (error: any) {
                             Toast.error(error.message);
                         }
