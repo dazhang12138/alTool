@@ -1,3 +1,4 @@
-export * from "./alBinHexOct";
-export * from "./alPeriodicTableOfElements";
-export * from "./alDateTimeCalculator";
+export * from "./binHexOct";
+export * from "./periodicTableOfElements";
+export * from "./dateTimeCalculator";
+export * from "./timeStampConversion";

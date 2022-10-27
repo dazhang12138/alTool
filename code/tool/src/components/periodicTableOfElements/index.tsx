@@ -1,7 +1,7 @@
 import {Breadcrumb, Col, Descriptions, Divider, Row, Typography} from "@douyinfe/semi-ui";
 import {IconHome, IconPriceTag} from "@douyinfe/semi-icons";
 import React from "react";
-require('./AlPeriodicTableOfElements.css');
+require('./index.css');
 const { Title } = Typography;
 
 

@@ -11,7 +11,7 @@ import {
     Typography
 } from "@douyinfe/semi-ui";
 import {IconHome, IconPriceTag} from "@douyinfe/semi-icons";
-import './alDateTimeCalculator.css'
+import './index.css'
 const { Title,Paragraph } = Typography;
 
 export const AlDateTimeCalculator = () => {
