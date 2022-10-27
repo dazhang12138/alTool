@@ -1,5 +1,5 @@
 import {FC, useEffect, useState} from "react";
-import {Card, CardGroup, Empty} from "@douyinfe/semi-ui";
+import {Avatar, Card, CardGroup, Empty, Typography} from "@douyinfe/semi-ui";
 import { IllustrationNoResult, IllustrationNoResultDark } from '@douyinfe/semi-illustrations';
 import {FileApiDefinition, ITool, ToolApiDefinition} from "@al-tool/domain";
 import {get} from "../service";
@@ -7,6 +7,9 @@ import {get} from "../service";
 type ToolProps = {
     typeid: string | undefined;
 }
+
+const {Meta} = Card;
+const {Text} = Typography;
 
 const empty = (
     <Empty
@@ -34,12 +37,25 @@ const Tool:FC<ToolProps> = (props) => {
                 return (<Card
                     key={item.id}
                     shadows='always'
-                    title={item.title}
-                    style={{ width:400 }}
-                    cover={
-                        <img alt={item.code} src={FileApiDefinition.downloadICO.client() + '?id=' + item.img}/>
+                    title={<Meta
+                        title={item.title}
+                        description={item.toolType}
+                        avatar={
+                            <Avatar
+                                alt='Card meta img'
+                                size="default"
+                                src={'http://127.0.0.1:3000'+FileApiDefinition.downloadICO.client() + '?id=' + item.img}
+                            />
+                        }
+                    />}
+                    headerExtraContent={
+                        <Text link={{href:item.url}}>
+                            进入
+                        </Text>
                     }
+                    style={{ width:300 }}
                 >
+                    {item.memo}
                 </Card>)
             }) : empty}
         </CardGroup>

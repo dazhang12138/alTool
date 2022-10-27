@@ -1,9 +1,8 @@
 import {RouteObject} from "react-router/dist/lib/context";
 import App from "../page/main";
-import AlBinHexOct from "../components/alBinHexOct";
 import {Navigate} from "react-router-dom";
 import ErrorBoundary from "../page/ErrorBoundary";
-import AlPeriodicTableOfElements from "../components/alPeriodicTableOfElements";
+import {AlBinHexOct, AlPeriodicTableOfElements, AlDateTimeCalculator} from "../components";
 
 
 export const routers: RouteObject[] = [
@@ -29,6 +28,11 @@ export const routers: RouteObject[] = [
                 //化学元素周期表
                 path: "PeriodicTableOfElements",
                 element: <AlPeriodicTableOfElements />
+            },
+            {
+                //时间日期计算器
+                path: "DateTimeCalculator",
+                element: <AlDateTimeCalculator />
             },
         ]
     },

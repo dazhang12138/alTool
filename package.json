@@ -6,6 +6,7 @@
   "scripts": {
     "start": "concurrently 'pnpm:start:*'",
     "start:server": "pnpm run --dir code/service start:dev",
-    "start:admin": "pnpm run --dir code/admin start:dev"
+    "start:admin": "pnpm run --dir code/admin start:dev",
+    "start:tool": "pnpm run --dir code/tool start"
   }
 }

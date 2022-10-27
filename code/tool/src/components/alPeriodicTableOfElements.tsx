@@ -5,7 +5,7 @@ require('./AlPeriodicTableOfElements.css');
 const { Title } = Typography;
 
 
-const AlPeriodicTableOfElements = () => {
+export const AlPeriodicTableOfElements = () => {
 
     const style = {
         boxShadow: 'var(--semi-shadow-elevated)',
@@ -423,5 +423,3 @@ const AlPeriodicTableOfElements = () => {
       </div>
   )
 }
-
-export default AlPeriodicTableOfElements;

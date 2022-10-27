@@ -55,7 +55,7 @@ const columns = [
 ]
 const markValue = [2,8,10,16,32,36,58,62];
 
-const AlBinHexOct = () => {
+export const AlBinHexOct = () => {
 
     const [value, setValue] = useState(2);
     const [numericalValue,setNumericalValue] = useState('1001');
@@ -210,5 +210,3 @@ const AlBinHexOct = () => {
         </div>
     )
 }
-
-export default AlBinHexOct;
