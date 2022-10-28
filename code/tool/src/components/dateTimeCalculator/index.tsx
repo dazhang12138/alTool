@@ -37,7 +37,7 @@ export const AlDateTimeCalculator = () => {
 
             <Title heading={2} style={{ margin: '8px 0' }} >时间日期计算器</Title>
             <Title heading={4} style={{ margin: '8px 0' }} >计算日期差</Title>
-            <Space vertical>
+            <Space vertical align={'start'}>
                 <Space>
                     <DatePicker style={{ width: 240 }} value={value1} onChange={(date)=>{ if (date instanceof Date) setValue1(date)}}/>
                     <Button theme='light' type='tertiary' onClick={()=>setValue1(new Date())}>设置为今天</Button>
@@ -55,7 +55,7 @@ export const AlDateTimeCalculator = () => {
             </Space>
             <Divider margin={12}/>
             <Title heading={4} style={{ margin: '8px 0' }} >推算日期</Title>
-            <Space vertical>
+            <Space vertical align={'start'}>
                 <Space>
                     <DatePicker style={{ width: 240 }} value={value3} onChange={(date)=>{ if (date instanceof Date) setValue3(date)}}/>
                     <Button theme='light' type='tertiary' onClick={()=>setValue3(new Date())}>设置为今天</Button>

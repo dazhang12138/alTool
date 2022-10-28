@@ -43,7 +43,7 @@ export const binhexOct = (value: string, scale: number):Partial<{ [key:number]:a
         throw new Error("进制值设置错误!");
     }
     value = value.replace(/\s/g,'');
-    if (scale == 2){
+    if (scale === 2){
         //二进制允许前置0
         value = value.replace(/\b(0+)/gi,'');
     }
