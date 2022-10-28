@@ -19,7 +19,6 @@ const Code:FC<CodeProps> = (props) => {
             startingLineNumber={0}
             language={props.lang}
             style={prism}
-            lineNumberStyle={{color: '#ddd', fontSize: 20}}
             wrapLines={true}
         >
             {props.children.replace(/^\s+|\s+$/g, '')}
