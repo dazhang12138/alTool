@@ -1,5 +1,5 @@
 import {EditOutlined, PlusOutlined} from '@ant-design/icons';
-import {Button, Card, List, message, Input, Tag, Dropdown, Menu, MenuProps} from 'antd';
+import {Button, Card, List, message, Input, Tag, Dropdown, Menu, MenuProps, Avatar, Space} from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
 import { useRequest } from 'umi';
 import { queryToolList,addType,updateType,statusUpType } from './service';
@@ -42,6 +42,10 @@ const handleUpdate = async (fields: TableListItem) => {
   const hide = message.loading('正在修改');
 
   try {
+    //处理img
+    if (fields['img'].length !== 36){
+      fields['img'] = fields['img'].substring(fields['img'].length -36);
+    }
     await updateType({ ...fields });
     hide();
     message.success('修改成功');
@@ -184,18 +188,23 @@ const CardList = () => {
                         run(searchdata);
                       }
                     }}>{item.status === ToolStatus.enable ? '停用' : '启用'}</a>,<Dropdown.Button type='text' overlay={menu}>序列操作</Dropdown.Button>]}
-                    cover={
-                      <img alt={item.code} src={item.img}/>
-                    }
                   >
                     <Card.Meta
-                      avatar={<Tag color={item.status === ToolStatus.enable ? "green" : "red"}>{item.status === ToolStatus.enable ? '启用' : '停用'}</Tag>}
-                      title={<a onClick={(e) => {
-                        e.preventDefault();
-                        setDone(true);
-                        setCurrent(item);
-                        handleModalVisible(true);
-                      }}>{item.title}</a>}
+                      avatar={<Avatar src={item.img}></Avatar>}
+                      title={<Space>
+                        <a onClick={(e) => {
+                            e.preventDefault();
+                            setDone(true);
+                            setCurrent(item);
+                            handleModalVisible(true);
+                          }}
+                        >
+                          {item.title}
+                        </a>
+                        <Tag color={item.status === ToolStatus.enable ? "green" : "red"}>
+                          {item.status === ToolStatus.enable ? '启用' : '停用'}
+                        </Tag>
+                      </Space>}
                       description={item.memo}
                     />
                   </Card>

@@ -119,6 +119,7 @@ export class TooltypeService{
     return this.tooltypeRepo.createQueryBuilder('tooltype')
         .andWhere('tooltype.status = :status')
         .setParameter('status', 'enable')
+        .orderBy('tooltype.code')
         .getMany();
   }
 }

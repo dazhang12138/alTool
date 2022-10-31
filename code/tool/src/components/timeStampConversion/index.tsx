@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {Breadcrumb, Button, Input, InputNumber, Select, Space, Table, Typography} from "@douyinfe/semi-ui";
 import {IconHome, IconPriceTag, IconStop, IconPlay, IconLink} from "@douyinfe/semi-icons";
 import {columns,data} from './data';
+import {useNavigate} from "react-router-dom";
 
 const { Title,Paragraph, Text } = Typography;
 
@@ -14,6 +15,7 @@ const getData = (data: Date) => {
 
 export const AlTimeStampConversion = () => {
 
+    const navigate = useNavigate();
     const [value2,setValue2] = useState('s');
     const [ts,setTs] = useState(getTime(true));
     const [run,setRun] = useState(true);
@@ -42,8 +44,8 @@ export const AlTimeStampConversion = () => {
     return(
         <div style={{margin: '20px 10px'}}>
             <Breadcrumb compact={false}>
-                <Breadcrumb.Item icon={<IconHome size="small" />}></Breadcrumb.Item>
-                <Breadcrumb.Item icon={<IconPriceTag size="small" />}>开发类</Breadcrumb.Item>
+                <Breadcrumb.Item href='/home' icon={<IconHome size="small" />}></Breadcrumb.Item>
+                <Breadcrumb.Item onClick={()=>navigate('/home',{state:{type:'开发类'}})} icon={<IconPriceTag size="small" />}>开发类</Breadcrumb.Item>
                 <Breadcrumb.Item>时间戳转换</Breadcrumb.Item>
             </Breadcrumb>
             <Title heading={2} style={{ margin: '8px 0' }} >时间戳转换</Title>

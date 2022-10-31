@@ -12,12 +12,14 @@ import {
 } from "@douyinfe/semi-ui";
 import {IconHome, IconPriceTag} from "@douyinfe/semi-icons";
 import './index.css'
+import {useNavigate} from "react-router-dom";
 const { Title,Paragraph } = Typography;
 
 export const AlDateTimeCalculator = () => {
 
     const week = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
 
+    const navigate = useNavigate();
     const [value1,setValue1] = useState(new Date());
     const [value2,setValue2] = useState(new Date('2023-1-1'));
     const [value3,setValue3] = useState(new Date());
@@ -30,8 +32,8 @@ export const AlDateTimeCalculator = () => {
     return(
         <div style={{margin: '20px 10px'}}>
             <Breadcrumb compact={false}>
-                <Breadcrumb.Item icon={<IconHome size="small" />}></Breadcrumb.Item>
-                <Breadcrumb.Item icon={<IconPriceTag size="small" />}>查询类</Breadcrumb.Item>
+                <Breadcrumb.Item href='/home' icon={<IconHome size="small" />}></Breadcrumb.Item>
+                <Breadcrumb.Item onClick={()=>navigate('/home',{state:{type:'查询类'}})} icon={<IconPriceTag size="small" />}>查询类</Breadcrumb.Item>
                 <Breadcrumb.Item>时间日期计算器</Breadcrumb.Item>
             </Breadcrumb>
 

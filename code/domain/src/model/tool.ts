@@ -27,3 +27,21 @@ export interface ITool {
     updatedAt: Date;
     ts: Date;
 }
+
+export interface IToolQuery {
+    id: string;
+    name: string;
+    code: string;
+    url: string;
+    title: string;
+    img: string;
+    memo: string;
+    orderNum: number;
+    frequently: boolean;
+    toolType: string
+    toolTypeName: string
+    status: ToolStatus;
+    createdAt: Date;
+    updatedAt: Date;
+    ts: Date;
+}

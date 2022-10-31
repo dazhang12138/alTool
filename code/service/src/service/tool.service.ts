@@ -120,15 +120,11 @@ export class ToolService {
      * @param id
      */
     async findByType(id) {
-        const query = this.toolRepo.createQueryBuilder('tool');
+        let sql  = `select tool.*,tooltype.name as toolTypeName from tool left join tooltype on tool.toolType = tooltype.id where tool.status = 'enable'`
         if (id){
-            query.andWhere('tool.toolType = :toolType')
-              .setParameter('toolType',id);
+            sql += ` and tool.toolType = '` + id + `'`;
         }
-
-       return await query.andWhere('tool.status = :status')
-         .setParameter('status',ToolStatus.enable)
-         .orderBy('orderNum')
-         .getMany();
+        sql += ` order by tool.orderNum`
+        return await this.toolRepo.query(sql);
     }
 }

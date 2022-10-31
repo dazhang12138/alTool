@@ -2,16 +2,18 @@ import {Breadcrumb, Col, Descriptions, Divider, Row, Typography} from "@douyinfe
 import {IconHome, IconPriceTag} from "@douyinfe/semi-icons";
 import React from "react";
 import {data,style,AXstyle,LXstyle} from './data';
+import {useNavigate} from "react-router-dom";
 require('./index.css');
 const { Title } = Typography;
 
 
 export const AlPeriodicTableOfElements = () => {
+    const navigate = useNavigate();
   return(
       <div style={{margin: '20px 10px',marginLeft:'-25%',marginRight:'-25%'}}>
           <Breadcrumb compact={false}>
-              <Breadcrumb.Item icon={<IconHome size="small" />}></Breadcrumb.Item>
-              <Breadcrumb.Item icon={<IconPriceTag size="small" />}>学术类</Breadcrumb.Item>
+              <Breadcrumb.Item href='/home' icon={<IconHome size="small" />}></Breadcrumb.Item>
+              <Breadcrumb.Item onClick={()=>navigate('/home',{state:{type:'学术类'}})} icon={<IconPriceTag size="small" />}>学术类</Breadcrumb.Item>
               <Breadcrumb.Item>化学元素周期表</Breadcrumb.Item>
           </Breadcrumb>
 

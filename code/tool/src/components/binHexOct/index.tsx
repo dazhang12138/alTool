@@ -14,6 +14,7 @@ import {
 import {IconHome, IconLink, IconPriceTag} from '@douyinfe/semi-icons';
 import {binhexOct} from "../arithmetic/binHexOct";
 import {columns,datas} from './data'
+import {useNavigate} from "react-router-dom";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -21,6 +22,7 @@ const markValue = [2,8,10,16,32,36,58,62];
 
 export const AlBinHexOct = () => {
 
+    const navigate = useNavigate();
     const [value, setValue] = useState(2);
     const [numericalValue,setNumericalValue] = useState('1001');
     const [result,setResult] = useState({
@@ -41,8 +43,8 @@ export const AlBinHexOct = () => {
     return(
         <div style={{margin: '20px 10px'}}>
             <Breadcrumb compact={false}>
-                <Breadcrumb.Item icon={<IconHome size="small" />}></Breadcrumb.Item>
-                <Breadcrumb.Item icon={<IconPriceTag size="small" />}>开发类</Breadcrumb.Item>
+                <Breadcrumb.Item href='/home' icon={<IconHome size="small" />}></Breadcrumb.Item>
+                <Breadcrumb.Item onClick={()=>navigate('/home',{state:{type:'开发类'}})} icon={<IconPriceTag size="small" />}>开发类</Breadcrumb.Item>
                 <Breadcrumb.Item>进制转换</Breadcrumb.Item>
             </Breadcrumb>
 

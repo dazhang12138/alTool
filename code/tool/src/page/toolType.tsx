@@ -5,16 +5,19 @@ import {get} from '../service'
 
 type ToolTypeProps = {
     onChange: (activeKey: string) => void;
+    type: string;
 }
 
 const ToolType:FC<ToolTypeProps> = (props) => {
 
     const {onChange} = props;
     const [data,setData] = useState([] as IToolType[]);
+    const [type,setType] = useState('allToolType');
 
     useEffect(()=>{
         get(ToolTypeApiDefinition.queryRefer.client(),null,(data)=>{
             setData(data.data);
+            data.filter(item -> item.name === props.type);
         })
     },[]);
 
@@ -22,7 +25,7 @@ const ToolType:FC<ToolTypeProps> = (props) => {
     return(
         <Tabs
             type="button"
-            defaultActiveKey='allToolType'
+            defaultActiveKey={type}
             onChange={onChange}
         >
             <TabPane tab='全部' itemKey='allToolType' />

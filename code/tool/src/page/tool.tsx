@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from "react";
 import {Avatar, Card, CardGroup, Empty, Typography} from "@douyinfe/semi-ui";
-import { IllustrationNoResult, IllustrationNoResultDark } from '@douyinfe/semi-illustrations';
-import {FileApiDefinition, ITool, ToolApiDefinition} from "@al-tool/domain";
+import {IllustrationNoResult, IllustrationNoResultDark} from '@douyinfe/semi-illustrations';
+import {FileApiDefinition, IToolQuery, ToolApiDefinition} from "@al-tool/domain";
 import {get} from "../service";
 
 type ToolProps = {
@@ -23,42 +23,42 @@ const Tool:FC<ToolProps> = (props) => {
 
     const {typeid} = props;
 
-    const [data,setData] = useState([] as ITool[]);
+    const [data,setData] = useState([] as IToolQuery[]);
 
     useEffect(()=>{
         get(ToolApiDefinition.queryType.client(),{id:typeid},(data) => {
             setData(data);
         });
-    },[])
+    },[typeid])
 
     return(
-        <CardGroup spacing={15}>
-            {data ? data.map(item => {
-                return (<Card
-                    key={item.id}
-                    shadows='always'
-                    title={<Meta
-                        title={item.title}
-                        description={item.toolType}
-                        avatar={
-                            <Avatar
-                                alt='Card meta img'
-                                size="default"
-                                src={'http://127.0.0.1:3000'+FileApiDefinition.downloadICO.client() + '?id=' + item.img}
-                            />
+        data.length > 0 ? <CardGroup spacing={15}>
+            {data.map(item => {
+                    return (<Card
+                        key={item.id}
+                        shadows='always'
+                        title={<Meta
+                            title={item.title}
+                            description={item.toolTypeName}
+                            avatar={
+                                <Avatar
+                                    alt='Card meta img'
+                                    size="default"
+                                    src={'http://127.0.0.1:3000'+FileApiDefinition.downloadICO.client() + '?id=' + item.img}
+                                />
+                            }
+                        />}
+                        headerExtraContent={
+                            <Text link={{href:item.url}}>
+                                进入
+                            </Text>
                         }
-                    />}
-                    headerExtraContent={
-                        <Text link={{href:item.url}}>
-                            进入
-                        </Text>
-                    }
-                    style={{ width:300 }}
-                >
-                    {item.memo}
-                </Card>)
-            }) : empty}
-        </CardGroup>
+                        style={{ width:300 }}
+                    >
+                        {item.memo}
+                    </Card>)
+            })}</CardGroup>
+            : empty
     );
 }
 export default Tool;
