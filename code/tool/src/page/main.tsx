@@ -16,8 +16,8 @@ const App = () => {
                 }else{
                     setId(activeKey);
                 }
-            }} type={location.state.type ? location.state.type : 'allToolType'}/>
-            <Tool typeid={id} type={location.state.type}/>
+            }} type={location.state && location.state.type ? location.state.type : 'allToolType'}/>
+            <Tool typeid={id}/>
         </>
     );
 }

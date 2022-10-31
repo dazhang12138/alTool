@@ -17,7 +17,12 @@ const ToolType:FC<ToolTypeProps> = (props) => {
     useEffect(()=>{
         get(ToolTypeApiDefinition.queryRefer.client(),null,(data)=>{
             setData(data.data);
-            data.filter(item -> item.name === props.type);
+            let defaultType = data.data && data.data.filter((item:IToolType) => item.name === props.type)
+            defaultType = defaultType && defaultType.length > 0 && defaultType[0];
+            if (defaultType && defaultType.id){
+                setType(defaultType.id);
+                onChange(defaultType.id);
+            }
         })
     },[]);
 
@@ -25,8 +30,12 @@ const ToolType:FC<ToolTypeProps> = (props) => {
     return(
         <Tabs
             type="button"
+            activeKey={type}
             defaultActiveKey={type}
-            onChange={onChange}
+            onChange={(activeKey)=>{
+                onChange(activeKey);
+                setType(activeKey);
+            }}
         >
             <TabPane tab='全部' itemKey='allToolType' />
             {data && data.map(item => {
