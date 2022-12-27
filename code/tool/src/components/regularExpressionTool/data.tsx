@@ -64,4 +64,6 @@ demo@live.com
 http://tool.lu/
 https://tool.lu/
 123456789012345
-16:09:22`
+16:09:22`;
+
+export const defaultTmp = '\n:#{text}${tmp}\n';

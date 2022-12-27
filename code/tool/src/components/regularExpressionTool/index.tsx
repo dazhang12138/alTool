@@ -2,20 +2,10 @@ import React, {useEffect, useState} from "react";
 import {Breadcrumb, Button, ButtonGroup, CheckboxGroup, Space, TextArea, Typography} from "@douyinfe/semi-ui";
 import {IconHome, IconPriceTag} from "@douyinfe/semi-icons";
 import {useNavigate} from "react-router-dom";
-import {checkboxGroupOptions, commomData, defaultText} from "./data";
-import {UnControlled as CodeMirror} from "react-codemirror2";
-import 'codemirror/lib/codemirror'
-import 'codemirror/lib/codemirror.css'
-// 主题风格
-import 'codemirror/theme/material.css';
-import 'codemirror/theme/base16-light.css'
-import 'codemirror/theme/base16-dark.css'
-// 设置代码语言模式（比如JS，SQL，python，java等）
-import 'codemirror/mode/markdown/markdown';
-//代码高亮
-import 'codemirror/addon/selection/active-line';
+import {checkboxGroupOptions, commomData, defaultText, defaultTmp} from "./data";
+import {MyRegularCodemirror, MyTextCodemirror} from './codemirror'
 
-const { Title,Paragraph, Text } = Typography;
+const { Title } = Typography;
 
 export const AlRegularExpressionTool = () => {
 
@@ -26,6 +16,7 @@ export const AlRegularExpressionTool = () => {
     const [regular,setRegular] = useState('');
     //处理文本
     const [text,setText] = useState(defaultText);
+    const [textTem,setTextTem] = useState(defaultText);
     //结果
     const [result,setResult] = useState('');
 
@@ -34,20 +25,27 @@ export const AlRegularExpressionTool = () => {
         if (regular){
             try {
                 let reg = new RegExp(regular,global.join(''));
-                let result = text.match(reg);
+                let result = textTem.match(reg);
                 if (result){
                     setResult(result.join('\n'));
-                    //动态css
-                    let mytext = document.getElementsByClassName('mytext');
-                    console.log('mytext:',mytext);
+                    setText(text+defaultTmp);
                 }else{
                     setResult('');
+                    setText(text+defaultTmp);
                 }
             }catch (e){
                 setResult('');
+                setText(text+defaultTmp);
             }
         }
     },[regular,global])
+
+    useEffect(()=>{
+        //正常修改文本时text=textTem。如果不等表示需要高亮显示，回退text版本等于tmp
+        if (text !== textTem){
+            setText(textTem);
+        }
+    },[text])
 
     return(
       <div style={{margin: '20px 10px'}}>
@@ -65,46 +63,22 @@ export const AlRegularExpressionTool = () => {
                   }}>{item.key}</Button>))}
               </ButtonGroup>
               <CheckboxGroup options={checkboxGroupOptions} direction='horizontal' value={global} onChange={(value)=>setGlobal(value)}/>
-              {/*<TextArea value={regular} onChange={(value) => setRegular(value)}/>*/}
-              <CodeMirror
-                  className={'myregular'}
-                  editorDidMount={(editor)=>{
-                      editor.setSize(1250,100);
-                  }}
-                  onChange={(editor,data,value)=>setRegular(value)}
-                  value={regular}
-                  options={{
-                      mode: 'markdown', //定义mode
-                      theme: 'base16-light', //选中的theme
-                      lineNumbers: true, //显示行号
-                      lineWrapping:true, //字段换行
-                      matchBrackets:true,//括号匹配
-                  }}
-              />
-              <Space>
-                  <Button>生成程序代码</Button>
-                  <Button>分享正则</Button>
-              </Space>
-              {/*<TextArea*/}
-              {/*    value={text}*/}
-              {/*    onChange={(value) => setText(value)}*/}
-              {/*    rows={10}*/}
-              {/*    showClear={true}/>*/}
-              <CodeMirror
-                  className={'mytext'}
-                  editorDidMount={(editor)=>{
-                      editor.setSize(1250,500);
-                  }}
-                  value={text}
-                  options={{
-                      mode: 'markdown', //定义mode
-                      theme: 'base16-light', //选中的theme
-                      lineNumbers: true, //显示行号
-                      lineWrapping:true, //字段换行
-                  }}
-              />
+              <MyRegularCodemirror text={regular} onChange={(value)=>{
+                  setRegular(value);
+              }}/>
+              {/*<Space>*/}
+              {/*    <Button onClick={()=>{}}>生成程序代码</Button>*/}
+              {/*</Space>*/}
+              <TextArea style={{display:'none'}} className={'myregularValue'} value={textTem} onChange={(value) => {
+                  setTextTem(value);
+              }} disabled/>
+              <MyTextCodemirror text={text} onChange={(value:string) => {
+                  //正常修改文本内容
+                  setTextTem(value);
+                  setText(value);
+              }}/>
               <Title heading={5} style={{ margin: '8px 0' }}>共找到 {result ? result.split('\n').length : 0} 处匹配结果</Title>
-              <TextArea value={result} onChange={(value) => setResult(value)} rows={10} readonly={true}/>
+              <TextArea className={'myResultValue'} value={result} onChange={(value) => setResult(value)} rows={10} readonly={true}/>
           </Space>
       </div>
     )
