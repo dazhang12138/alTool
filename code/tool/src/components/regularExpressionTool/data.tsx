@@ -66,4 +66,25 @@ https://tool.lu/
 123456789012345
 16:09:22`;
 
-export const defaultTmp = '\n:#{text}${tmp}\n';
+export const defaultCode = (regular:string,global:string)=>{
+    return {
+        '1':`var pattern = /${regular}/${global},
+\tstr = '';
+console.log(pattern.test(str));`,
+        '2':`$str = '';
+$isMatched = preg_match_all('/${regular}/', $str, $matches);
+var_dump($isMatched, $matches);`,
+        '3':`package main
+
+import (
+\t"fmt"
+\t"regexp"
+)
+
+func main() {
+\tstr := "test"
+\tmatched, err := regexp.MatchString("${regular}", str)
+\tfmt.Println(matched, err)
+}`
+    }
+}

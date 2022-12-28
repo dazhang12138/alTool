@@ -2,8 +2,9 @@ import React, {useEffect, useState} from "react";
 import {Breadcrumb, Button, ButtonGroup, CheckboxGroup, Space, TextArea, Typography} from "@douyinfe/semi-ui";
 import {IconHome, IconPriceTag} from "@douyinfe/semi-icons";
 import {useNavigate} from "react-router-dom";
-import {checkboxGroupOptions, commomData, defaultText, defaultTmp} from "./data";
+import {checkboxGroupOptions, commomData, defaultText} from "./data";
 import {MyRegularCodemirror, MyTextCodemirror} from './codemirror'
+import {CodeModal} from './codeModal';
 
 const { Title } = Typography;
 
@@ -16,36 +17,31 @@ export const AlRegularExpressionTool = () => {
     const [regular,setRegular] = useState('');
     //处理文本
     const [text,setText] = useState(defaultText);
-    const [textTem,setTextTem] = useState(defaultText);
+    // const [textTem,setTextTem] = useState(defaultText);
     //结果
     const [result,setResult] = useState('');
+    const [textKey, setTextKey] = useState(Date.now());
+    const [regularKey, setRegularKey] = useState(Date.now());
 
     useEffect(() => {
         //监听正则表达式变化
         if (regular){
             try {
                 let reg = new RegExp(regular,global.join(''));
-                let result = textTem.match(reg);
+                let result = text.match(reg);
                 if (result){
                     setResult(result.join('\n'));
-                    setText(text+defaultTmp);
+                    setTextKey(Date.now());
                 }else{
                     setResult('');
-                    setText(text+defaultTmp);
+                    setTextKey(Date.now());
                 }
             }catch (e){
                 setResult('');
-                setText(text+defaultTmp);
+                setTextKey(Date.now());
             }
         }
     },[regular,global])
-
-    useEffect(()=>{
-        //正常修改文本时text=textTem。如果不等表示需要高亮显示，回退text版本等于tmp
-        if (text !== textTem){
-            setText(textTem);
-        }
-    },[text])
 
     return(
       <div style={{margin: '20px 10px'}}>
@@ -63,18 +59,14 @@ export const AlRegularExpressionTool = () => {
                   }}>{item.key}</Button>))}
               </ButtonGroup>
               <CheckboxGroup options={checkboxGroupOptions} direction='horizontal' value={global} onChange={(value)=>setGlobal(value)}/>
-              <MyRegularCodemirror text={regular} onChange={(value)=>{
+              <MyRegularCodemirror key={regularKey} text={regular} onChange={(value)=>{
                   setRegular(value);
               }}/>
-              {/*<Space>*/}
-              {/*    <Button onClick={()=>{}}>生成程序代码</Button>*/}
-              {/*</Space>*/}
-              <TextArea style={{display:'none'}} className={'myregularValue'} value={textTem} onChange={(value) => {
-                  setTextTem(value);
-              }} disabled/>
-              <MyTextCodemirror text={text} onChange={(value:string) => {
+              <Space>
+                  <CodeModal regular={regular} global={global.join('')}/>
+              </Space>
+              <MyTextCodemirror key={textKey} text={text} onChange={(value:string) => {
                   //正常修改文本内容
-                  setTextTem(value);
                   setText(value);
               }}/>
               <Title heading={5} style={{ margin: '8px 0' }}>共找到 {result ? result.split('\n').length : 0} 处匹配结果</Title>
