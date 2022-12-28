@@ -83,8 +83,45 @@ import (
 
 func main() {
 \tstr := "test"
-\tmatched, err := regexp.MatchString("${regular}", str)
+\tmatched, err := regexp.MatchString("${regular.replace(new RegExp(/\\/,("gm")),'\\\\')}", str)
 \tfmt.Println(matched, err)
-}`
+}`,
+        '4':`pattern = /${regular}/
+str = ''
+p pattern.match(str)`,
+        '5':`import re
+pattern = re.compile(ur'${regular}')
+str = u''
+print pattern.search(str)`,
+        '6':`import re
+pattern = re.compile(r'${regular}')
+str = ''
+print(pattern.search(str))`,
+        '7':`import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class RegexMatches {
+\t
+\tpublic static void main(String args[]) {
+\t\tString str = "";
+\t\tString pattern = "${regular.replace(new RegExp(/\\/,("gm")),'\\\\')}";
+
+\t\tPattern r = Pattern.compile(pattern);
+\t\tMatcher m = r.matcher(str);
+\t\tSystem.out.println(m.matches());
+\t}
+
+}`,
+        '8':`NSString *str = @"";
+NSString *pattern = @"${regular.replace(new RegExp(/\\/,("gm")),'\\\\')}";
+NSError *error = NULL;
+NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern: pattern options: nil error: &error];
+NSArray *match = [regex matchesInString: str options: NSMatchingCompleted range: NSMakeRange(0, [str length])];
+if (match.count != 0) {
+\t// ...
+}`,
+        '9':`String str = "";
+RegExp pattern = new RegExp(r"${regular}");
+pattern.hasMatch(str);`
     }
 }
