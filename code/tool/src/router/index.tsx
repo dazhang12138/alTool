@@ -8,7 +8,7 @@ import {
     AlDateTimeCalculator,
     AlTimeStampConversion,
     AlRegularExpressionTool,
-    DocumentSpecification
+    DocumentSpecification, FestivalHeadPictureMaking
 } from "../components";
 
 
@@ -46,9 +46,13 @@ export const routers: RouteObject[] = [
                 path: "RegularExpressionTool",
                 element: <AlRegularExpressionTool />
             },{
-                //证件照规格要求
+                //图片规格
                 path: "DocumentSpecification",
                 element: <DocumentSpecification />
+            },{
+                //节日头像制作
+                path: "FestivalHeadPictureMaking",
+                element: <FestivalHeadPictureMaking />
             },
         ]
     },

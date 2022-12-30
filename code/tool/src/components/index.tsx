@@ -4,3 +4,4 @@ export * from "./dateTimeCalculator";
 export * from "./timeStampConversion";
 export * from "./regularExpressionTool";
 export * from "./documentSpecification";
+export * from "./festivalHeadPictureMaking";
